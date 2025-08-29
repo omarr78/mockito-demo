@@ -2,39 +2,32 @@ package com.learning.mockitodemo.business;
 
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class SomeBusinessImplTest {
+
+    @Mock
+    private DataService dataServiceMock;
+
+    @InjectMocks
+    private SomeBusinessImpl someBusinessImpl;
+
     @Test
     void findTheGreatestNumber_basicScenario() {
-        DataService dataServiceStub = new DataServiceStub1();
-        SomeBusinessImpl someBusinessImpl = new SomeBusinessImpl(dataServiceStub);
-
-        int result = someBusinessImpl.findTheGreatestNumber();
-        assertEquals(25,result);
+        when(dataServiceMock.retrieveAllData()).thenReturn(new int[] { 25, 15, 5});
+        assertEquals(25,someBusinessImpl.findTheGreatestNumber());
     }
 
     @Test
     void findTheGreatestNumber_withOneValue() {
-        DataService dataServiceStub = new DataServiceStub2();
-        SomeBusinessImpl someBusinessImpl = new SomeBusinessImpl(dataServiceStub);
-
-        int result = someBusinessImpl.findTheGreatestNumber();
-        assertEquals(100,result);
+        when(dataServiceMock.retrieveAllData()).thenReturn(new int[] {100});
+        assertEquals(100,someBusinessImpl.findTheGreatestNumber());
     }
 }
-class DataServiceStub1 implements DataService {
-    @Override
-    public int[] retrieveAllData() {
-        return new int[] { 25, 15, 5};
-    }
-}
-
-class DataServiceStub2 implements DataService {
-    @Override
-    public int[] retrieveAllData() {
-        return new int[] {100};
-    }
-}
-
