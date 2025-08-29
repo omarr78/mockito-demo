@@ -32,6 +32,6 @@ build/
 ### VS Code ###
 .vscode/
 
-# Exclude business packages
-src/main/java/com/learning/mockitodemo/business/
-src/test/java/com/learning/mockitodemo/business/
+## Exclude business packages
+#src/main/java/com/learning/mockitodemo/business/
+#src/test/java/com/learning/mockitodemo/business/
